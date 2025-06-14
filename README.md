@@ -49,28 +49,34 @@ The server starts on http://localhost:8080.
 ## 📦 API Endpoints
 ### ➕ Create account
 POST /accounts
-Request body
+Request body:
+```bash
 {
   "account_id": 123,
   "initial_balance": "100.23344"
 }
+```
 
 ### 📘 Get account balance
 GET /accounts/123
-Request body: 
+Request body:
+```bash
 {
   "account_id": 123,
   "balance": "100.23344"
 }
+```
 
 ### 💸 Submit transaction
 POST /transactions
-Request body: 
+Request body:
+```bash
 {
   "source_account_id": 123,
   "destination_account_id": 456,
   "amount": "100.12345"
 }
+```
 
 ## 🔐 Assumptions
 All accounts use the same currency.

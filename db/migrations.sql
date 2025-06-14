@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS accounts (
+    account_id BIGINT PRIMARY KEY,
+    balance NUMERIC(20,8) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id SERIAL PRIMARY KEY,
+    source_account_id BIGINT NOT NULL,
+    destination_account_id BIGINT NOT NULL,
+    amount NUMERIC(20,8) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
