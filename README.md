@@ -7,6 +7,7 @@ It allows you to:
  - Transfer money between accounts
 
 📁 Project Structure
+```
 avd-simple-transfer/
 ├── server/
 │   └── main.go                 # Entry point
@@ -20,6 +21,7 @@ avd-simple-transfer/
 │   └── migrations.sql
 ├── go.mod
 └── README.md
+```
 
 ## 🚀 Getting Started
 1. Clone the repo
