@@ -47,34 +47,59 @@ go run server/main.go
 The server starts on http://localhost:8080.
 
 ## 📦 API Endpoints
-### ➕ Create account
-POST /accounts
-Request body:
+### 📗 Create account
+- HTTP Method: POST
+- Uri: /accounts
+- Request body:
 ```bash
 {
   "account_id": 123,
   "initial_balance": "100.23344"
 }
 ```
+- Response Body: 
+	- successful Http status 200
+```bash
+{
+
+}
+```
 
 ### 📘 Get account balance
-GET /accounts/123
-Request body:
+- HTTP Method: GET
+- URI: /accounts/:accountId
+eg. /accounts/123
+- Request body:
 ```bash
 {
   "account_id": 123,
   "balance": "100.23344"
 }
 ```
+- Response Body: 
+	- successful Http status 200
+```bash
+{
+
+}
+```
 
 ### 💸 Submit transaction
-POST /transactions
-Request body:
+- HTTP Method: POST
+- Uri: /transactions
+- Request body:
 ```bash
 {
   "source_account_id": 123,
   "destination_account_id": 456,
   "amount": "100.12345"
+}
+```
+- Response Body: 
+	- successful Http status 200
+```bash
+{
+
 }
 ```
 
