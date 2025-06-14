@@ -26,8 +26,8 @@ avd-simple-transfer/
 ## 🚀 Getting Started
 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/internal-transfer.git
-cd internal-transfer
+git clone https://github.com/your-username/avd-simple-transfer.git
+cd avd-simple-transfer
 ```
 2. Set up PostgreSQL
 Create a database named transfers (or change the name in config/db.go) and run the migration:
