@@ -12,10 +12,12 @@ avd-simple-transfer/
 ├── server/
 │   └── main.go                 # Entry point
 ├── src/
+│   ├── dto/                    # HTTP request and response dto
 │   ├── handler/                # HTTP handlers (Gin)
 │   ├── model/                  # Struct definitions
 │   ├── repository/             # DB logic
 │   └── service/                # Business logic
+│   └── utils/                  # Utility & helpers
 ├── config/                     # DB connection setup
 ├── db/                         # Database schema
 │   └── migrations.sql
@@ -26,7 +28,7 @@ avd-simple-transfer/
 ## 🚀 Getting Started
 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/avd-simple-transfer.git
+git clone https:        //github.com/your-username/avd-simple-transfer.git
 cd avd-simple-transfer
 ```
 2. Set up PostgreSQL
@@ -44,7 +46,7 @@ go mod tidy
 ```bash
 go run server/main.go
 ```
-The server starts on http://localhost:8080.
+The server starts on http:        //localhost:8080.
 
 ## 📦 API Endpoints
 ### 📗 Create account
@@ -77,13 +79,12 @@ The server starts on http://localhost:8080.
 }
 ```
 - Response Body: 
-	- successful Http status 200
+	- Http status 200 if successful
 ```bash
 {
 
 }
 ```
-
 ### 💸 Submit transaction
 - HTTP Method: POST
 - URI: /transactions
@@ -103,13 +104,28 @@ The server starts on http://localhost:8080.
 }
 ```
 
+### Errorful response
+- In case of 4xx or 5xx errors following will be the response body
+```bash
+{
+    "error": "account not found",                                // human readble error message
+    "code": "ACCOUNT_NOT_FOUND",                                 // error code for tracing
+    "status": 404,                                               // http status depending on type of error occurred
+    "request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
+    "details": {                                                 // details
+        "AccountID": "is required",
+        "InitialBalance": "is required"
+    }
+}
+```
+
 ## 🔐 Assumptions
-All accounts use the same currency.
-No authentication or authorization is implemented.
-Transfers are atomic and transactional at the database level.
-Monetary values are stored as NUMERIC(20,8) in PostgreSQL for precision.
+- All accounts use the same currency.
+- No authentication or authorization is implemented.
+- Transfers are atomic and transactional at the database level.
+- Monetary values are stored as NUMERIC(20,8) in PostgreSQL for precision.
 
 ## 🛠️ Tech Stack
 - Golang (Gin)
 - PostgreSQL
-- pgx PostgreSQL driver
+- Gorm ORM
