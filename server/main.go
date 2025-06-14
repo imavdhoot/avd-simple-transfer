@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yourusername/avd-simple-transfer/config"
-	"github.com/yourusername/avd-simple-transfer/src/handler"
+	"github.com/imavdhoot/avd-simple-transfer/config"
+	"github.com/imavdhoot/avd-simple-transfer/src/handler"
 )
 
 func main() {

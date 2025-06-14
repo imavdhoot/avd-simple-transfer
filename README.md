@@ -49,7 +49,7 @@ The server starts on http://localhost:8080.
 ## 📦 API Endpoints
 ### 📗 Create account
 - HTTP Method: POST
-- Uri: /accounts
+- URI: /accounts
 - Request body:
 ```bash
 {
@@ -68,7 +68,7 @@ The server starts on http://localhost:8080.
 ### 📘 Get account balance
 - HTTP Method: GET
 - URI: /accounts/:accountId
-eg. /accounts/123
+	- eg. /accounts/123
 - Request body:
 ```bash
 {
@@ -86,7 +86,7 @@ eg. /accounts/123
 
 ### 💸 Submit transaction
 - HTTP Method: POST
-- Uri: /transactions
+- URI: /transactions
 - Request body:
 ```bash
 {
