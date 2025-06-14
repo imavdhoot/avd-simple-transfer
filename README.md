@@ -62,7 +62,7 @@ The server starts on http:        //localhost:8080.
 - Response
 	- Http status: 201 on account creation
 	- Body: empty body for successful creation of account
-	- on error refer to [here](#Errorful)
+	- on error refer to [here](#errorful-response)
 
 ### 📘 Get account balance
 - HTTP Method: GET
