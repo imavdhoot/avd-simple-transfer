@@ -59,25 +59,16 @@ The server starts on http:        //localhost:8080.
   "initial_balance": "100.23344"
 }
 ```
-- Response Body: 
-	- successful Http status 200
-```bash
-{
-
-}
-```
+- Response
+  - Http status: 201 on account creation
+	- Body: empty body for successful creation of account
+	- on error refer to [here]((#Errorful))
 
 ### 📘 Get account balance
 - HTTP Method: GET
 - URI: /accounts/:accountId
 	- eg. /accounts/123
-- Request body:
-```bash
-{
-  "account_id": 123,
-  "balance": "100.23344"
-}
-```
+
 - Response Body: 
 	- Http status 200 if successful
 ```bash
@@ -104,7 +95,7 @@ The server starts on http:        //localhost:8080.
 }
 ```
 
-### Errorful response
+### ❌ Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
