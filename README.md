@@ -55,14 +55,14 @@ The server starts on http:        //localhost:8080.
 - Request body:
 ```bash
 {
-  "account_id": 123,
-  "initial_balance": "100.23344"
+	"account_id": 123,
+	"initial_balance": "100.23344"
 }
 ```
 - Response
-  - Http status: 201 on account creation
+	- Http status: 201 on account creation
 	- Body: empty body for successful creation of account
-	- on error refer to [here]((#Errorful))
+	- on error refer to [here](#Errorful response)
 
 ### 📘 Get account balance
 - HTTP Method: GET
@@ -82,9 +82,9 @@ The server starts on http:        //localhost:8080.
 - Request body:
 ```bash
 {
-  "source_account_id": 123,
-  "destination_account_id": 456,
-  "amount": "100.12345"
+	"source_account_id": 123,
+	"destination_account_id": 456,
+	"amount": "100.12345"
 }
 ```
 - Response Body: 
@@ -99,14 +99,14 @@ The server starts on http:        //localhost:8080.
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
-    "error": "account not found",                                // human readble error message
-    "code": "ACCOUNT_NOT_FOUND",                                 // error code for tracing
-    "status": 404,                                               // http status depending on type of error occurred
-    "request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
-    "details": {                                                 // details
-        "AccountID": "is required",
-        "InitialBalance": "is required"
-    }
+		"error": "account not found",                                // human readble error message
+		"code": "ACCOUNT_NOT_FOUND",                                 // error code for tracing
+		"status": 404,                                               // http status depending on type of error occurred
+		"request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
+		"details": {                                                 // details
+				"AccountID": "is required",
+				"InitialBalance": "is required"
+		}
 }
 ```
 
