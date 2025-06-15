@@ -51,6 +51,7 @@ go run server/main.go
 The server starts on http://localhost:8080
 
 ## 📦 API Endpoints
+If you are running on local then use Host http://localhost:8080
 ### 📗 Create account
 - HTTP Method: POST
 - URI: /api/v1/accounts
@@ -69,13 +70,14 @@ The server starts on http://localhost:8080
 ### 📘 Get account balance
 - HTTP Method: GET
 - URI: /api/v1/accounts/:accountId
-	- eg. /accounts/123
+	- eg. /api/v1/accounts/123
 
 - Response Body: 
 	- Http status 200 if successful
 ```bash
 {
-
+	"account_id": 123,
+	"initial_balance": "100.23344"
 }
 ```
 ### 💸 Submit transaction
@@ -97,9 +99,7 @@ The server starts on http://localhost:8080
 }
 ```
 
-<!-- anchor -->
-<a id="errorful-response"></a>
-### ❌ Errorful response
+### Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
