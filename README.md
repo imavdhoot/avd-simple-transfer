@@ -33,12 +33,12 @@ git clone https://github.com/imavdhoot/avd-simple-transfer.git
 cd avd-simple-transfer
 ```
 2. Set up PostgreSQL
-Create a database named transfers (or change the name in config/db.go) and run the migration:
-Ensure your PostgreSQL user and password match the connection string inside config/db.go and also
-Your user have required permissions viz CREATE TABLE etc.
+Create a database named transfers (or change the name in config/db.go) and run the migration command below.
 ```bash
 psql -U postgres -d transfers -f db/migrations.sql
 ```
+Ensure your PostgreSQL user and password match the connection string inside config/db.go and also
+Your user have required permissions viz CREATE TABLE etc.
 
 3. Install dependencies
 ```bash
@@ -99,9 +99,7 @@ If you are running on local then use Host http://localhost:8080
 }
 ```
 
-<!-- anchor -->
-<a id="errorful-response"></a>
-### ❌ Errorful response
+### <a name="errorful-response"></a> ❌ Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
