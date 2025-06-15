@@ -141,7 +141,7 @@ go test ./test/...
 - No authentication or authorization is implemented.
 - Transfers are atomic and transactional at the database level.
 - Monetary values are stored as NUMERIC(20,8) in PostgreSQL for precision.
-- 'Create Account' API and 'Submit transaction' API supposed to have string amount value as per assignment but used float instead and realized very late in assignment.
+- APIs are supposed to have string amount value as per assignment but used float instead and realized very late in assignment.
 - String values are much better to avoid rounding off errors, but needs an extra strconv.ParseFloat on every request
 - precision of amounts are still protected with gorm NUMERIC(20,8) fields
 
