@@ -2,6 +2,7 @@ package handler
 
 import (
 	"log"
+	"time"
 	"net/http"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -35,10 +36,22 @@ func (h *TransactionHandler) SubmitTransaction(c *gin.Context) {
 	
 	log.Printf("[RID=%s][HandlerSubmitTransaction] request body %+v", rid, req)
 
-	err := h.svc.Transfer(c, req.SourceAccountID, req.DestinationAccountID, req.Amount)
+	txn, err := h.svc.Transfer(c, req.SourceAccountID, req.DestinationAccountID, req.Amount)
 	if err != nil {
 		c.Error(err)
 		return
 	}
-	c.Status(http.StatusOK)
+
+	log.Printf("[RID=%s][HandlerSubmitTransaction]txn body %+v", rid, txn)
+
+	resp := dto.SubmitTransactionResponse{
+		TransactionID: txn.ID,
+		Message:       "success",
+		Status:        http.StatusOK,
+		CreatedAt:     txn.CreatedAt.Format(time.RFC3339),
+		RequestID:     rid,
+	}
+
+	log.Printf("[RID=%s][HandlerSubmitTransaction] response body %+v", rid, resp)
+	c.JSON(http.StatusOK, resp)
 }

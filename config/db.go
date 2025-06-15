@@ -21,19 +21,16 @@ func ConnectDB() *gorm.DB {
 	// Load .env.test during testing
 	if os.Getenv("GO_ENV") == "test" {
 		log.Printf("loading .env.test")
-		_ = godotenv.Load(".env.test")
+		_ = godotenv.Load("../.env.test")
 	} else {
 		_ = godotenv.Load()
 	}
 
-	user := envOr("PG_USER", "avdhoot")
-	pass := envOr("PG_PASS", "app_password")
+	user := envOr("PG_USER", "postgres")
+	pass := envOr("PG_PASS", "password")
 	host := envOr("PG_HOST", "localhost")
 	port := envOr("PG_PORT", "5432")
 	dbName := envOr("PG_DB", "transfers")
-
-	log.Printf("user>>>>> %s", os.Getenv("GO_ENV"))
-	log.Printf("user>>>>> %s %s %s", user, pass, dbName)
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		host, user, pass, dbName, port)

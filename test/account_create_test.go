@@ -10,6 +10,7 @@ import (
 
 	"gorm.io/gorm"
 	"github.com/gin-gonic/gin"
+
 	"github.com/imavdhoot/avd-simple-transfer/config"
 	"github.com/imavdhoot/avd-simple-transfer/src/handler"
   "github.com/imavdhoot/avd-simple-transfer/src/middleware"

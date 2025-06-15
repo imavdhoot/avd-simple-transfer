@@ -41,8 +41,11 @@ func (r *Repository) GetAccount(ctx context.Context, id int64) (model.Account, e
 	return acc, err
 }
 
-func (r *Repository) TransferTx(ctx context.Context, srcID, dstID int64, amt float64) error {
-	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+func (r *Repository) TransferTx(ctx context.Context, srcID, dstID int64,
+	amt float64) (model.Transaction, error) {
+
+	var txnRec model.Transaction
+	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		rid := ctx.Value("request_id")
 		log.Printf("[RID=%s][RepoTransferTx] executing the transfer from:: %d to:: %d of Amount:: %f",
 			rid, srcID, dstID, amt)
@@ -73,12 +76,16 @@ func (r *Repository) TransferTx(ctx context.Context, srcID, dstID int64, amt flo
 			return err
 		}
 
-		return tx.Create(&model.Transaction{
+		txnRec = model.Transaction{
 			SourceAccountID:      srcID,
 			DestinationAccountID: dstID,
 			Amount:               amt,
-		}).Error
+		}
+
+		return tx.Create(&txnRec).Error
 	})
+
+	return txnRec, err
 }
 
 

@@ -6,16 +6,18 @@ import (
 	"os"
 	"testing"
 
+	"gorm.io/gorm"
 	"github.com/gin-gonic/gin"
+
 	"github.com/imavdhoot/avd-simple-transfer/config"
 	"github.com/imavdhoot/avd-simple-transfer/src/handler"
 	"github.com/imavdhoot/avd-simple-transfer/src/model"
   "github.com/imavdhoot/avd-simple-transfer/src/middleware"
-	"gorm.io/gorm"
 )
 
 func setupTestDB2(t *testing.T) *gorm.DB {
 	os.Setenv("GO_ENV", "test")
+  os.Setenv("PG_DB", "transfers_test")  
 	db := config.ConnectDB()
 	sqlDB, _ := db.DB()
 	sqlDB.Exec("TRUNCATE accounts, transactions RESTART IDENTITY")

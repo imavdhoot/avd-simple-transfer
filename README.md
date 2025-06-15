@@ -23,7 +23,6 @@ avd-simple-transfer/
 ├── db/                         # Database schema
 │   └── migrations.sql
 ├── test/                       # Testsuite
-│   └── api_test.go
 ├── go.mod
 └── README.md
 ```
@@ -61,7 +60,7 @@ If you are running on local then use Host http://localhost:8080
 ```bash
 {
   "account_id": 123,
-  "initial_balance": "100.23344"
+  "initial_balance": 100.23344
 }
 ```
 - Response
@@ -79,7 +78,7 @@ If you are running on local then use Host http://localhost:8080
 ```bash
 {
   "account_id": 123,
-  "initial_balance": "100.23344"
+  "initial_balance": 100.23344
 }
 ```
 ### 💸 3. Submit transaction
@@ -90,14 +89,18 @@ If you are running on local then use Host http://localhost:8080
 {
   "source_account_id": 123,
   "destination_account_id": 456,
-  "amount": "100.12345"
+  "amount": 100.12345
 }
 ```
 - Response Body: 
   - successful Http status 200
 ```bash
 {
-
+  "transaction_id": 4,
+  "message": "success",
+  "status": 200,
+  "created_at": "2025-06-16T00:29:42+08:00",
+  "request_id": "78726603-701d-425e-9fa0-f0a96870d1c1"
 }
 ```
 
@@ -138,6 +141,9 @@ go test ./test/...
 - No authentication or authorization is implemented.
 - Transfers are atomic and transactional at the database level.
 - Monetary values are stored as NUMERIC(20,8) in PostgreSQL for precision.
+- 'Create Account' API and 'Submit transaction' API supposed to have string amount value as per assignment but used float instead and realized very late in assignment.
+- String values are much better to avoid rounding off errors, but needs an extra strconv.ParseFloat on every request
+- precision of amounts are still protected with gorm NUMERIC(20,8) fields
 
 ## 🛠️ Tech Stack
 - Golang (Gin)
