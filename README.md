@@ -99,7 +99,7 @@ If you are running on local then use Host http://localhost:8080
 }
 ```
 
-### Errorful response
+### Errorful Response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
