@@ -1,7 +1,7 @@
-// src/repository/gorm_repository.go
 package repository
 
 import (
+	"log"
 	"context"
 
 	"gorm.io/gorm"
@@ -19,7 +19,10 @@ func (r *Repository) CreateAccount(ctx context.Context, acc model.Account) error
 }
 
 func (r *Repository) GetAccount(ctx context.Context, id int64) (model.Account, error) {
+	rid := ctx.Value("request_id")
+	log.Printf("[RID=%s][RepoGetAccount] fetching AccountID:: %d", rid, id)
 	var acc model.Account
+
 	err := r.db.WithContext(ctx).First(&acc, "account_id = ?", id).Error
 	if err == gorm.ErrRecordNotFound {
 		return acc, constant.ErrAccountNotFound

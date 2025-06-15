@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"errors"
-	"strconv"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 
@@ -30,11 +29,12 @@ func (h *AccountHandler) CreateAccount(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, utils.NewValidationResp(c, ve))
 			return
 		}		
+
 		c.Error(err)
 		return
 	}
 	
-	log.Printf("[RID=%s][CreateAccount] request body %+v", rid, req)	
+	log.Printf("[RID=%s][CreateAccount] request body %+v", rid, req)
 	account := model.Account{AccountID: req.AccountID, Balance: req.InitialBalance}
 	
 	err := h.svc.Create(c, account)
@@ -48,12 +48,23 @@ func (h *AccountHandler) CreateAccount(c *gin.Context) {
 
 func (h *AccountHandler) GetAccount(c *gin.Context) {
 	rid := c.GetString("request_id")
-	idStr := c.Param("id")
-	log.Printf("[RID=%s][GetAccount] request received AccountID:: %s", rid, idStr)
+	idStr := c.Param("account_id")
+	log.Printf("[RID=%s][HandlerGetAccount] request received AccountID:: %s", rid, idStr)
 
-	id, _ := strconv.ParseInt(idStr, 10, 64)
+	var uri dto.AccountURI
+	if err := c.ShouldBindUri(&uri); err != nil {
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			c.JSON(http.StatusBadRequest, utils.NewValidationResp(c, ve))
+			return
+		}
+		c.Error(err);
+		return
+	}
+
+	// id, _ := strconv.ParseInt(idStr, 10, 64)
 	
-	acc, err := h.svc.Get(c, id)
+	acc, err := h.svc.Get(c, uri.AccountID)
 	if err != nil {
 		c.Error(err)
 		return

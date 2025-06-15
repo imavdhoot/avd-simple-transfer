@@ -12,6 +12,7 @@ avd-simple-transfer/
 ├── server/
 │   └── main.go                 # Entry point
 ├── src/
+│   ├── constant/               # constant values used in project
 │   ├── dto/                    # HTTP request and response dto
 │   ├── handler/                # HTTP handlers (Gin)
 │   ├── model/                  # Struct definitions
@@ -26,17 +27,18 @@ avd-simple-transfer/
 ```
 
 ## 🚀 Getting Started
-1. Clone the repo
+1. Clone the repo from the github and change directory to cloned repo
 ```bash
-git clone https:        //github.com/your-username/avd-simple-transfer.git
+git clone https://github.com/imavdhoot/avd-simple-transfer.git
 cd avd-simple-transfer
 ```
 2. Set up PostgreSQL
 Create a database named transfers (or change the name in config/db.go) and run the migration:
+Ensure your PostgreSQL user and password match the connection string inside config/db.go and also
+Your user have required permissions viz CREATE TABLE etc.
 ```bash
 psql -U postgres -d transfers -f db/migrations.sql
 ```
-Ensure your PostgreSQL user and password match the connection string inside config/db.go.
 
 3. Install dependencies
 ```bash
@@ -46,12 +48,12 @@ go mod tidy
 ```bash
 go run server/main.go
 ```
-The server starts on http:        //localhost:8080.
+The server starts on http://localhost:8080
 
 ## 📦 API Endpoints
 ### 📗 Create account
 - HTTP Method: POST
-- URI: /accounts
+- URI: /api/v1/accounts
 - Request body:
 ```bash
 {
@@ -62,11 +64,11 @@ The server starts on http:        //localhost:8080.
 - Response
 	- Http status: 201 on account creation
 	- Body: empty body for successful creation of account
-	- on error refer to [here](#errorful-response)
+	- on error refer to [here](#️errorful-response)
 
 ### 📘 Get account balance
 - HTTP Method: GET
-- URI: /accounts/:accountId
+- URI: /api/v1/accounts/:accountId
 	- eg. /accounts/123
 
 - Response Body: 
@@ -78,7 +80,7 @@ The server starts on http:        //localhost:8080.
 ```
 ### 💸 Submit transaction
 - HTTP Method: POST
-- URI: /transactions
+- URI: /api/v1/transactions
 - Request body:
 ```bash
 {
@@ -95,6 +97,8 @@ The server starts on http:        //localhost:8080.
 }
 ```
 
+<!-- anchor -->
+<a id="errorful-response"></a>
 ### ❌ Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
@@ -105,7 +109,6 @@ The server starts on http:        //localhost:8080.
 		"request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
 		"details": {                                                 // details
 				"AccountID": "is required",
-				"InitialBalance": "is required"
 		}
 }
 ```

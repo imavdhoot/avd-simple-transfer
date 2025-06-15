@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"log"
 	"errors"
+	"context"
 	"net/http"
 	"encoding/json"
 
@@ -26,9 +28,12 @@ func ErrorHandler() gin.HandlerFunc {
 		rid := uuid.New().String()
 		c.Set("request_id", rid)
 
-		c.Next() // run handler
+		ctx := context.WithValue(c.Request.Context(), "request_id", rid)
+		c.Request = c.Request.WithContext(ctx)
 
-		// Step 2: Handle errors from c.Error()
+		c.Next()
+
+		// Step 3: Handle errors from c.Error()
 		if len(c.Errors) == 0 {
 			return
 		}
@@ -58,6 +63,7 @@ func ErrorHandler() gin.HandlerFunc {
 			RequestID: rid,
 		}
 
+		log.Printf("[RID=%s][ErrorHandler] response body %+v", rid, resp)
 		c.JSON(status, resp)
 	}
 }
