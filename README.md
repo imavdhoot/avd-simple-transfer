@@ -67,7 +67,7 @@ If you are running on local then use Host http://localhost:8080
 - Response
   - Http status: 201 on account creation
   - Body: empty body for successful creation of account
-  - on error refer to [here](#️--errorful-response)
+  - on error refer to [here](#️-errorful-response)
 
 ### 📘 2. Get account balance
 - HTTP Method: GET
@@ -118,7 +118,7 @@ If you are running on local then use Host http://localhost:8080
 ## ✅ Running Tests
 We use a dedicated test database (`transfers_test`) for safe, repeatable tests.
 Make sure your PostgreSQL user also have required permissions to do these migrations.
-For help can use this [cheatsheet for Postgres](#https://quickref.me/postgres.html)
+For help can use this [cheatsheet for PostgreSQL](https://quickref.me/postgres.html)
 #### 1. Create the test database and apply migrations (from terminal):
 
 ```bash
