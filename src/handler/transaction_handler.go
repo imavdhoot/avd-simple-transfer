@@ -1,10 +1,15 @@
 package handler
 
 import (
+	"log"
 	"net/http"
-
+	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
+
+	"github.com/imavdhoot/avd-simple-transfer/src/dto"
 	"github.com/imavdhoot/avd-simple-transfer/src/service"
+	"github.com/imavdhoot/avd-simple-transfer/src/utils"
 )
 
 type TransactionHandler struct {
@@ -12,18 +17,27 @@ type TransactionHandler struct {
 }
 
 func (h *TransactionHandler) SubmitTransaction(c *gin.Context) {
-	var req struct {
-		SourceAccountID      int64   `json:"source_account_id"`
-		DestinationAccountID int64   `json:"destination_account_id"`
-		Amount               float64 `json:"amount"`
-	}
+	rid := c.GetString("request_id")
+	log.Printf("[RID=%s][HandlerSubmitTransaction] request received", rid)
+
+	var req dto.SubmitTransactionRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		var ve validator.ValidationErrors
+		if errors.As(err, &ve) {
+			log.Printf("[RID=%s][HandlerSubmitTransaction] Validation error %+v", rid, ve)
+			c.JSON(http.StatusBadRequest, utils.NewValidationResp(c, ve))
+			return
+		}		
+
+		c.Error(err)
 		return
 	}
+	
+	log.Printf("[RID=%s][HandlerSubmitTransaction] request body %+v", rid, req)
+
 	err := h.svc.Transfer(c, req.SourceAccountID, req.DestinationAccountID, req.Amount)
 	if err != nil {
-		c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
+		c.Error(err)
 		return
 	}
 	c.Status(http.StatusOK)

@@ -22,6 +22,8 @@ avd-simple-transfer/
 ├── config/                     # DB connection setup
 ├── db/                         # Database schema
 │   └── migrations.sql
+├── test/                       # Testsuite
+│   └── api_test.go
 ├── go.mod
 └── README.md
 ```
@@ -37,8 +39,8 @@ Create a database named transfers (or change the name in config/db.go) and run t
 ```bash
 psql -U postgres -d transfers -f db/migrations.sql
 ```
-Ensure your PostgreSQL user and password match the connection string inside config/db.go and also
-Your user have required permissions viz CREATE TABLE etc.
+Ensure your PostgreSQL user and password match the connection string inside .env file and also
+Your user have required permissions like CREATE TABLE etc.
 
 3. Install dependencies
 ```bash
@@ -65,7 +67,7 @@ If you are running on local then use Host http://localhost:8080
 - Response
   - Http status: 201 on account creation
   - Body: empty body for successful creation of account
-  - on error refer to [here](#️errorful-response)
+  - on error refer to [here](#️--errorful-response)
 
 ### 📘 2. Get account balance
 - HTTP Method: GET
@@ -99,7 +101,7 @@ If you are running on local then use Host http://localhost:8080
 }
 ```
 
-### Errorful Response
+### ❌ Errorful Response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
@@ -111,6 +113,24 @@ If you are running on local then use Host http://localhost:8080
     "AccountID": "is required",
   }
 }
+```
+
+## ✅ Running Tests
+We use a dedicated test database (`transfers_test`) for safe, repeatable tests.
+Make sure your PostgreSQL user also have required permissions to do these migrations.
+For help can use this [cheatsheet for Postgres](#https://quickref.me/postgres.html)
+#### 1. Create the test database and apply migrations (from terminal):
+
+```bash
+# Create test DB (run from your terminal)
+createdb transfers_test
+
+# Apply schema to test DB (also run from your terminal)
+psql -U postgres -d transfers_test -f db/migrations.sql
+```
+#### 2. To run unit tests for API endpoints:
+```bash
+go test ./test/...
 ```
 
 ## 🔐 Assumptions

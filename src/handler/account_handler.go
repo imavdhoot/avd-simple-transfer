@@ -19,22 +19,22 @@ type AccountHandler struct {
 
 func (h *AccountHandler) CreateAccount(c *gin.Context) {
 	rid := c.GetString("request_id")
-	log.Printf("[RID=%s][CreateAccount] request received", rid)
+	log.Printf("[RID=%s][HandlerCreateAccount] request received", rid)
 
 	var req dto.CreateAccountRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err, &ve) {
-			log.Printf("[RID=%s][CreateAccount] Validation error %+v", rid, ve)
+			log.Printf("[RID=%s][HandlerCreateAccount] Validation error %+v", rid, ve)
 			c.JSON(http.StatusBadRequest, utils.NewValidationResp(c, ve))
 			return
-		}		
+		}
 
 		c.Error(err)
 		return
 	}
 	
-	log.Printf("[RID=%s][CreateAccount] request body %+v", rid, req)
+	log.Printf("[RID=%s][HandlerCreateAccount] request body %+v", rid, req)
 	account := model.Account{AccountID: req.AccountID, Balance: req.InitialBalance}
 	
 	err := h.svc.Create(c, account)
@@ -61,8 +61,6 @@ func (h *AccountHandler) GetAccount(c *gin.Context) {
 		c.Error(err);
 		return
 	}
-
-	// id, _ := strconv.ParseInt(idStr, 10, 64)
 	
 	acc, err := h.svc.Get(c, uri.AccountID)
 	if err != nil {

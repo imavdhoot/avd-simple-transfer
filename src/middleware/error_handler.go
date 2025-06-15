@@ -42,13 +42,23 @@ func ErrorHandler() gin.HandlerFunc {
 		status := http.StatusInternalServerError
 		code := "INTERNAL_ERROR"
 
+		log.Printf("[DEBUG] switch duplicate-test: %T  ->  %v", err, err)
 		switch {
+		case errors.Is(err, constant.ErrAccountExists):
+			code = "ACCOUNT_EXIST"
+			status = http.StatusConflict
 		case errors.Is(err, constant.ErrAccountNotFound):
 			code = "ACCOUNT_NOT_FOUND"
 			status = http.StatusNotFound
 		case errors.Is(err, constant.ErrInsufficientFund):
 			code = "INSUFFICIENT_FUNDS"
 			status = http.StatusConflict
+		case errors.Is(err, constant.ErrSrcAccountNotFound):
+			code = "SRC_ACCOUNT_NOT_FOUND"
+			status = http.StatusNotFound
+		case errors.Is(err, constant.ErrDstAccountNotFound):
+			code = "DST_ACCOUNT_NOT_FOUND"
+			status = http.StatusNotFound
 		case errors.As(err, new(validator.ValidationErrors)),
 				 errors.As(err, new(*json.SyntaxError)),
 				 errors.As(err, new(*json.UnmarshalTypeError)):
