@@ -52,64 +52,66 @@ The server starts on http://localhost:8080
 
 ## 📦 API Endpoints
 If you are running on local then use Host http://localhost:8080
-### 📗 Create account
+### 📗 1. Create account
 - HTTP Method: POST
 - URI: /api/v1/accounts
 - Request body:
 ```bash
 {
-	"account_id": 123,
-	"initial_balance": "100.23344"
+  "account_id": 123,
+  "initial_balance": "100.23344"
 }
 ```
 - Response
-	- Http status: 201 on account creation
-	- Body: empty body for successful creation of account
-	- on error refer to [here](#️errorful-response)
+  - Http status: 201 on account creation
+  - Body: empty body for successful creation of account
+  - on error refer to [here](#️errorful-response)
 
-### 📘 Get account balance
+### 📘 2. Get account balance
 - HTTP Method: GET
 - URI: /api/v1/accounts/:accountId
-	- eg. /api/v1/accounts/123
+  - eg. /api/v1/accounts/123
 
 - Response Body: 
-	- Http status 200 if successful
+  - Http status 200 if successful
 ```bash
 {
-	"account_id": 123,
-	"initial_balance": "100.23344"
+  "account_id": 123,
+  "initial_balance": "100.23344"
 }
 ```
-### 💸 Submit transaction
+### 💸 3. Submit transaction
 - HTTP Method: POST
 - URI: /api/v1/transactions
 - Request body:
 ```bash
 {
-	"source_account_id": 123,
-	"destination_account_id": 456,
-	"amount": "100.12345"
+  "source_account_id": 123,
+  "destination_account_id": 456,
+  "amount": "100.12345"
 }
 ```
 - Response Body: 
-	- successful Http status 200
+  - successful Http status 200
 ```bash
 {
 
 }
 ```
 
-### Errorful response
+<!-- anchor -->
+<a id="errorful-response"></a>
+### ❌ Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
-		"error": "account not found",                                // human readble error message
-		"code": "ACCOUNT_NOT_FOUND",                                 // error code for tracing
-		"status": 404,                                               // http status depending on type of error occurred
-		"request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
-		"details": {                                                 // details
-				"AccountID": "is required",
-		}
+  "error": "account not found",                                // human readble error message
+  "code": "ACCOUNT_NOT_FOUND",                                 // error code for tracing
+  "status": 404,                                               // http status depending on type of error occurred
+  "request_id": "8b71a739-8dee-4f96-8bca-572326597707"         // request_id
+  "details": {                                                 // details
+    "AccountID": "is required",
+  }
 }
 ```
 
