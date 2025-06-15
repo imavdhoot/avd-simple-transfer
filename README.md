@@ -65,7 +65,7 @@ If you are running on local then use Host http://localhost:8080
 - Response
   - Http status: 201 on account creation
   - Body: empty body for successful creation of account
-  - on error refer to [here](#️errorful-response)
+  - on error refer to [here](#️--errorful-response)
 
 ### 📘 2. Get account balance
 - HTTP Method: GET
@@ -99,7 +99,7 @@ If you are running on local then use Host http://localhost:8080
 }
 ```
 
-### <a name="errorful-response"></a> ❌ Errorful response
+### ❌ Errorful response
 - In case of 4xx or 5xx errors following will be the response body
 ```bash
 {
